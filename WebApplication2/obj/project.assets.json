@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\работы visual\\WebApplication2\\WebApplication2.csproj",
+      "projectUniqueName": "E:\\Бобокинетика\\web-interface-RK\\WebApplication2\\WebApplication2.csproj",
       "projectName": "WebApplication2",
-      "projectPath": "D:\\работы visual\\WebApplication2\\WebApplication2.csproj",
+      "projectPath": "E:\\Бобокинетика\\web-interface-RK\\WebApplication2\\WebApplication2.csproj",
       "packagesPath": "C:\\Users\\groza\\.nuget\\packages\\",
-      "outputPath": "D:\\работы visual\\WebApplication2\\obj\\",
+      "outputPath": "E:\\Бобокинетика\\web-interface-RK\\WebApplication2\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "D:\\visual studio\\3\\NuGetPackages"
