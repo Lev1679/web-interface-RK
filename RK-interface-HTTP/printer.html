@@ -25,8 +25,40 @@
     <section class="printer-status">
         <div class="container">
             <h2>Статус 3D принтера</h2>
-            <p id="printerStatus">Подождите, проверяем статус...</p>
+            <p id="extruderTemperatureDisplay">Подождите, проверяем температуру...</p>
         </div>
     </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const apiKey = 'c326c12042de41bfa7ca92905d2b32ff';
+            const apiUrl = 'https://192.168.5.7:7125/printer/objects/query?extruder';
+
+            const updateTemperatureDisplay = (temperature) => {
+                const displayElement = document.getElementById('extruderTemperatureDisplay');
+                displayElement.innerText = `Температура экструдера: ${temperature}`;
+            };
+
+            fetch(apiUrl, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${apiKey}`
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Ошибка при запросе: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const extruderTemperature = data.temperature || 'Не найдено';
+                updateTemperatureDisplay(extruderTemperature);
+            })
+            .catch(error => {
+                console.error('Ошибка при получении данных:', error.message);
+            });
+        });
+    </script>
 </body>
 </html>
