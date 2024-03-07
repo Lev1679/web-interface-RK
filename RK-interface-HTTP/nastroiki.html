@@ -3,14 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Робокинетика</title>
+    <title>Калькулятор стоимости 3D модели</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="javascript/bd.js"></script>
+    <script src="BD.SQL"></script>
+    <script src="javascript/node.js"></script>
 </head>
 <body>
     <header>
         <div class="container">
-            <img src="имагес/unnamed.jpg" alt="Логотип">
-            <h1>Робокинетика</h1>
+            <a href="основа.html">
+                <!-- Логотип и название сайта -->
+                <img src="имагес/unnamed.jpg" alt="Логотип">
+                <h1>Робокинетика</h1>
+            </a>
+            <!-- Навигационное меню -->
             <nav>
                 <ul>
                     <li><a href="printer.html">Принтеры</a></li>
@@ -21,6 +28,46 @@
             </nav>
         </div>
     </header>
-    <!-- Остальное содержимое вашего сайта здесь -->
+    <body>
+    
+    <h1>База данных пластика</h1>
+    <table id="plasticPricesTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Тип пластика</th>
+                <th>Цена за кг (руб)</th>
+                <th>Количество</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Данные будут заполняться с помощью JavaScript -->
+        </tbody>
+    </table>
+
+    <script>
+        fetch('/plastic-prices')
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.querySelector('#plasticPricesTable tbody');
+                data.forEach(row => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${row.id}</td>
+                        <td>${row.plastic_type}</td>
+                        <td>${row.price_per_kg}</td>
+                        <td>${row.quantity}</td>
+                    `;
+                    tableBody.appendChild(tr);
+                });
+            })
+            .catch(error => console.error('Ошибка:', error));
+    </script>
+</body>
+</html>
+
+
+
+    
 </body>
 </html>

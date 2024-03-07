@@ -1,23 +1,26 @@
-function calculator() {
-    var length = parseFloat(document.getElementById("length").value);
-    var width = parseFloat(document.getElementById("width").value);
-    var height = parseFloat(document.getElementById("height").value);
-    var infill = parseFloat(document.getElementById("infill").value);
-    var material = document.getElementById("material").value; // Получаем выбранный тип пластика
+function calculateCostAndPrice() {
+    var length = parseFloat(document.getElementById('length').value);
+    var width = parseFloat(document.getElementById('width').value);
+    var height = parseFloat(document.getElementById('height').value);
+    var density = parseFloat(document.getElementById('density').value);
+    var pricePerKg = parseFloat(document.getElementById('pricePerKg').value);
+    var materialCost = parseFloat(document.getElementById('materialCost').value);
+    var laborCost = parseFloat(document.getElementById('laborCost').value);
+    var desiredProfit = parseFloat(document.getElementById('desiredProfit').value);
 
-    // Рассчеты на основе выбранного пластика
-    var density;
-    if (material === "pla") {
-        density = 1.24; // Пример плотности PLA в г/см^3
-    } else if (material === "abs") {
-        density = 1.04; // Пример плотности ABS в г/см^3
-    } else if (material === "petg") {
-        density = 1.27; // Пример плотности PETG в г/см^3
+    if (isNaN(length) || isNaN(width) || isNaN(height) || isNaN(density) || isNaN(pricePerKg) || isNaN(materialCost) || isNaN(laborCost) || isNaN(desiredProfit)) {
+        document.getElementById('status').innerText = "Ошибка: Пожалуйста, введите числовые значения во все поля.";
+        return;
     }
 
-    var volume = length * width * height; // Объем модели
-    var plasticUsed = (volume * (infill / 100) * density).toFixed(2); // Расход пластика
+    var volume = length * width * height;
+    var plasticWeight = volume * density / 1000;
+    var totalPlasticCost = plasticWeight * pricePerKg;
+    var totalCost = totalPlasticCost + materialCost + laborCost;
+    var profitPercentage = 1 + desiredProfit / 100;
+    var sellingPrice = totalCost * profitPercentage;
 
-    var resultDiv = document.getElementById("result");
-    resultDiv.innerHTML = "Для печати этой модели понадобится " + plasticUsed + " кубических сантиметров пластика.";
+    document.getElementById('result').innerHTML = "Себестоимость модели: " + totalCost.toFixed(2) + " рублей<br>" +
+        "Цена для продажи: " + sellingPrice.toFixed(2) + " рублей";
+    document.getElementById('status').innerText = "Выполнено: Расчет завершен успешно.";
 }
