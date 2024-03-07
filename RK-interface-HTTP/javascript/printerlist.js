@@ -1,25 +1,54 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const apiKey = 'c326c12042de41bfa7ca92905d2b32ff';
-    const apiUrl = 'http://127.0.0.1:7125/printer/objects/query?extruder'; // обновите этот URL
+function sendRequestTemperature() {
+    var url = 'http://192.168.5.7:7125/printer/objects/query?extruder';
 
-    const xhr = new XMLHttpRequest();
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
 
     xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
-                const response = JSON.parse(xhr.responseText);
-                const extruderTemperature = response.temperature || 'Не найдено';
-
-                document.getElementById('extruderTemperatureDisplay').innerText = `Температура экструдера: ${extruderTemperature}`;
+                var response = JSON.parse(xhr.responseText);
+                var temperature = response.result.status.extruder.temperature;
+                document.getElementById('response').textContent = 'Текущая температура экструдера: ' + temperature + '°C';
             } else {
-                console.error(`Ошибка при запросе: ${xhr.status}`);
+                document.getElementById('response').textContent = 'Ошибка: Невозможно получить данные о принтере';
             }
         }
     };
 
-    xhr.open('GET', apiUrl, true);
-    xhr.setRequestHeader('Authorization', `Bearer ${apiKey}`);
-    xhr.send();
-});
+    xhr.onerror = function () {
+        document.getElementById('response').textContent = 'Ошибка: Невозможно выполнить запрос к принтеру';
+    };
 
-// Мы пытались через Javascript, но ничего не получилось
+    xhr.send();
+}
+
+function sendRequestHeaterBed() {
+    var url = 'http://192.168.5.7:7125/printer/objects/query?heater_bed';
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                var temperature = response.result.status.heater_bed.temperature;
+                document.getElementById('response2').textContent = 'Текущая температура платформы: ' + temperature + '°C';
+            } else {
+                document.getElementById('response2').textContent = 'Ошибка: Невозможно получить данные о принтере';
+            }
+        }
+    };
+
+    xhr.onerror = function () {
+        document.getElementById('response2').textContent = 'Ошибка: Невозможно выполнить запрос к принтеру';
+    };
+
+    xhr.send();
+}
+
+sendRequestTemperature();
+sendRequestHeaterBed();
+setInterval(sendRequestTemperature, 3000);
+setInterval(sendRequestHeaterBed, 3000);
