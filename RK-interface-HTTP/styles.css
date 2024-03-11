@@ -84,7 +84,7 @@ input[type="number"] {
 }
 
 /* Стили для кнопки */
-button {
+.button-resource {
     width: 100%;
     padding: 10px;
     background-color: #4CAF50;
@@ -99,4 +99,20 @@ button {
     margin-top: 20px;
     font-size: 18px;
     text-align: center;
+}
+
+/* СТРАНИЦА С ПРИНТЕРАМИ */
+
+.button-addprinter {
+    background-image: url('images/printer_list/button_nomouse.png');
+    background-color: rgba(0,0,0,0);
+    background-size: cover;
+    border: none;
+    width: 200px;
+    height: 250px;
+    position: relative;
+}
+
+.button-addprinter:hover {
+    background-image: url('images/printer_list/button_mouse.png');
 }
