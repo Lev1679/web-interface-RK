@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Калькулятор стоимости 3D модели</title>
+    <title>Склад</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="javascript/bd.js"></script>
-    <script src="BD.SQL"></script>
-    <script src="javascript/node.js"></script>
+    <script src="javascript/bd.js"></script> 
+
 </head>
 <body>
     <header>
@@ -22,29 +21,73 @@
                 <ul>
                     <li><a href="printer.html">Принтеры</a></li>
                     <li><a href="resurs.html">Ресурсы</a></li>
-                    <li><a href="nastroiki.html">Настройки</a></li>
+                    <li><a href="nastroiki.html">Склад</a></li>
                     <li><a href="server.html">Сервер</a></li>
                 </ul>
             </nav>
         </div>
     </header>
-    <body>
-    
-    <h1>База данных пластика</h1>
-    <table id="plasticPricesTable">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Тип пластика</th>
-                <th>Цена за кг (руб)</th>
-                <th>Количество</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Данные будут заполняться с помощью JavaScript -->
-        </tbody>
+
+  
+    <h1>Склад пластика</h1>
+
+    <table id="plasticTable">
+        <tr>
+            <th>Вид пластика</th>
+            <th>Количество (кг)</th>
+        </tr>
+        <tr>
+            <td>Пластик A</td>
+            <td id="plasticA">100</td>
+        </tr>
+        <tr>
+            <td>Пластик B</td>
+            <td id="plasticB">150</td>
+        </tr>
+        <!-- Добавьте дополнительные строки по необходимости -->
     </table>
 
+    <br>
+
+    <label for="plasticType">Выберите вид пластика:</label>
+    <select id="plasticType">
+        <option value="plasticA">Пластик A</option>
+        <option value="plasticB">Пластик B</option>
+        <!-- Добавьте дополнительные варианты по необходимости -->
+    </select>
+
+    <label for="quantity">Введите количество (кг):</label>
+    <input type="number" id="quantity" min="0" value="0">
+
+    <button onclick="updateQuantity()">Обновить количество</button>
+
+    <div>
+        <h2>Добавить новый вид пластика</h2>
+        <label for="newPlasticName">Название пластика:</label>
+        <input type="text" id="newPlasticName">
+        <button onclick="addNewPlastic()">Добавить</button>
+    </div>
+
+    <script src="javascript/java.js"></script>
+
+    <script>
+        fetch('/plastic-prices')
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.querySelector('#plasticPricesTable tbody');
+                data.forEach(row => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${row.id}</td>
+                        <td>${row.plastic_type}</td>
+                        <td>${row.price_per_kg}</td>
+                        <td>${row.quantity}</td>
+                    `;
+                    tableBody.appendChild(tr);
+                });
+            })
+            .catch(error => console.error('Ошибка:', error));
+    </script>
     <script>
         fetch('/plastic-prices')
             .then(response => response.json())

@@ -1,0 +1,19 @@
+{
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "xprotocol",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5500,
+            "driver": "MySQL",
+            "name": "SQL",
+            "database": "SQL",
+            "username": "root",
+            "password": "admin",
+            "connectionTimeout": 15
+        }
+    ]
+}
