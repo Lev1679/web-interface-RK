@@ -4,8 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Принтеры | Робокинетика</title>
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
     <link rel="stylesheet" href="styles.css">
-    <script src="JavaScript/printerlist.js"></script>
+    <script src="JavaScript/Request.js"></script>
 </head>
 
 <body>
@@ -25,15 +30,51 @@
             </nav>
         </div>
     </header>
+
+
     <h1> Принтеры:</h1>
-    <section class="printer-status">
-        <div class="response-container">
-            <button class="button-addprinter" onclick="Clickfunciton()">
-            </button>
-            <h2 id="response" class="hidden"></h2>
-            <h3 id="response2" class="hidden"></h3>
-        </div>
+    <section class="request">
+        <button class="request_button" onclick="showText()">
+        </button>
+        <h2 id="response" class="hidden"></h2>
+        <h3 id="response2" class="hidden"></h3>
     </section>
+
+
+    <div class="modal">
+        <div class="modal_main">
+            <h2 class="modal_title">Модальное окно 2</h2>
+    
+            <div class="modal_container">
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum doloremque unde perferendis.</p>
+                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ea accusantium aperiam, quis commodi
+                    incidunt amet quidem vero ut possimus sed veniam aliquam eum, in porro consequuntur impedit deserunt
+                    sequi velit quisquam quod suscipit. Consequuntur, facere earum, iusto sit odit aperiam ipsam illo
+                    architecto autem esse eos eius maiores quam magnam?</p>
+            </div>
+    
+            <button class="modal_close">&#10006;</button>
+        </div>
+    </div>
+
+    <script>
+        function showText() {
+            var ResponceTemp = document.getElementById("response");
+            ResponceTemp.style.display = "block"; // Исправлено с "block"
+            var ResponceBed = document.getElementById("response2");
+            ResponceBed.style.display = "block"; // Исправлено с "block"
+        }
+
+        function showIPwindow() {
+            modalController({
+                modal: '.modal',
+                btnOpen: '.request_button',
+                btnClose: '.modal_close',
+            });
+        }
+    </script>
+    <script src="JavaScript/modalwindows.js" defer></script>
+
 </body>
 
 </html>

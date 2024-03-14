@@ -1,28 +1,26 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Робокинетика</title>
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Показать текстовое поле и кнопку</title>
+<script>
+    function showInput() {
+        document.getElementById("inputText").style.display = "block";
+        document.getElementById("submitButton").style.display = "block";
+        document.getElementById("showInputButton").style.display = "none";
+    }
+
+    function displayText() {
+        var inputText = document.getElementById("inputText").value;
+        document.getElementById("displayArea").innerText = inputText;
+    }
+</script>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <a href="index.html">
-                <img src="images\unnamed.jpg" alt="Логотип">
-                <h1>Робокинетика</h1>
-                </a>
-            <nav>
-                <ul>
-                    <li><a href="printer.html">Принтеры</a></li>
-                    <li><a href="resurs.html">Ресурсы</a></li>
-                    <li><a href="nastroiki.html">Склад</a></li>
-                    <li><a href="server.html">Сервер</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-    <!-- Остальное содержимое вашего сайта здесь -->
+    <button id="showInputButton" onclick="showInput()">Показать текстовое поле и кнопку</button>
+    <input type="text" id="inputText" placeholder="Введите текст" style="display: none;">
+    <button id="submitButton" onclick="displayText()" style="display: none;">Показать текст</button>
+    <div id="displayArea"></div>
 </body>
 </html>

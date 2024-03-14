@@ -103,7 +103,7 @@ input[type="number"] {
 
 /* СТРАНИЦА С ПРИНТЕРАМИ */
 
-.button-addprinter {
+.request_button {
     background-image: url('images/printer_list/button_nomouse.png');
     background-color: rgba(0,0,0,0);
     background-size: cover;
@@ -113,7 +113,7 @@ input[type="number"] {
     position: relative;
 }
 
-.button-addprinter:hover {
+.request_button:hover {
     background-image: url('images/printer_list/button_mouse.png');
 }
 body {
@@ -136,4 +136,3 @@ body {
   th {
     background-color: #f2f2f2;
   }
-  
