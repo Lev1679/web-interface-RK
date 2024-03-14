@@ -34,7 +34,7 @@
 
     <h1> Принтеры:</h1>
     <section class="request">
-        <button class="request_button" onclick="showText()">
+        <button class="request_button" onclick="showIPwindow()">
         </button>
         <h2 id="response" class="hidden"></h2>
         <h3 id="response2" class="hidden"></h3>
@@ -43,16 +43,13 @@
 
     <div class="modal">
         <div class="modal_main">
-            <h2 class="modal_title">Модальное окно 2</h2>
-    
+            <h2 class="modal_title">Принтер 192.168.5.7</h2>
+
             <div class="modal_container">
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum doloremque unde perferendis.</p>
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ea accusantium aperiam, quis commodi
-                    incidunt amet quidem vero ut possimus sed veniam aliquam eum, in porro consequuntur impedit deserunt
-                    sequi velit quisquam quod suscipit. Consequuntur, facere earum, iusto sit odit aperiam ipsam illo
-                    architecto autem esse eos eius maiores quam magnam?</p>
+                <p id="responseText"></p>
+                <p id="response2Text"></p>
             </div>
-    
+
             <button class="modal_close">&#10006;</button>
         </div>
     </div>
@@ -60,20 +57,25 @@
     <script>
         function showText() {
             var ResponceTemp = document.getElementById("response");
-            ResponceTemp.style.display = "block"; // Исправлено с "block"
+            ResponceTemp.style.display = "block"; 
             var ResponceBed = document.getElementById("response2");
-            ResponceBed.style.display = "block"; // Исправлено с "block"
+            ResponceBed.style.display = "block"; 
         }
 
         function showIPwindow() {
-            modalController({
-                modal: '.modal',
-                btnOpen: '.request_button',
-                btnClose: '.modal_close',
-            });
-        }
+        const modalElem = document.querySelector('.modal'); 
+        const responseText = document.getElementById("response").textContent;
+        const response2Text = document.getElementById("response2").textContent;
+
+        modalElem.style.display = 'block'; 
+        document.getElementById("responseText").textContent = responseText; 
+        document.getElementById("response2Text").textContent = response2Text;
+
+        setInterval(RequestFunc, 3000);
+    }
+
     </script>
-    <script src="JavaScript/modalwindows.js" defer></script>
+    <script src="JavaScript/modalwindows.js"></script>
 
 </body>
 
