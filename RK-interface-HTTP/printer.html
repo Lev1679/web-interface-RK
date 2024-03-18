@@ -10,7 +10,8 @@
         }
     </style>
     <link rel="stylesheet" href="styles.css">
-    <script src="JavaScript/Request.js"></script>
+    <script src="JavaScript/Printers/Request.js"></script>
+    <script src="JavaScript/Printers/AddPrinter.js"></script>
 </head>
 
 <body>
@@ -25,7 +26,7 @@
                     <li><a href="printer.html">Принтеры</a></li>
                     <li><a href="resurs.html">Ресурсы</a></li>
                     <li><a href="nastroiki.html">Склад</a></li>
-                    <li><a href="server.html">Сервер</a></li>
+                    <li><a href="testing.html">вкладка для тестов</a></li>
                 </ul>
             </nav>
         </div>
@@ -34,10 +35,10 @@
 
     <h1> Принтеры:</h1>
     <section class="request">
-        <button class="request_button" onclick="showIPwindow()">
+        <button id="addPrinterBtn" class="button-addprinter" onclick="addPrinter()">
         </button>
-        <h2 id="response" class="hidden"></h2>
-        <h3 id="response2" class="hidden"></h3>
+     <!--   <h2 id="response" class="hidden"></h2> -->
+      <!--  <h3 id="response2" class="hidden"></h3> -->
     </section>
 
 
@@ -63,17 +64,16 @@
         }
 
         function showIPwindow() {
-        const modalElem = document.querySelector('.modal'); 
-        const responseText = document.getElementById("response").textContent;
-        const response2Text = document.getElementById("response2").textContent;
+            const modalElem = document.querySelector('.modal'); 
+            const responseText = document.getElementById("response").textContent;
+            const response2Text = document.getElementById("response2").textContent;
 
-        modalElem.style.display = 'block'; 
-        document.getElementById("responseText").textContent = responseText; 
-        document.getElementById("response2Text").textContent = response2Text;
+            modalElem.style.display = 'block'; 
+            document.getElementById("responseText").textContent = responseText; 
+            document.getElementById("response2Text").textContent = response2Text;
 
-        setInterval(RequestFunc, 3000);
-    }
-
+            setInterval(RequestFunc, 3000);
+        }
     </script>
     <script src="JavaScript/modalwindows.js"></script>
 

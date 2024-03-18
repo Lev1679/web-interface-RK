@@ -34,6 +34,6 @@ function modalController({modal, btnOpen, btnClose, time = 300}) {
 
 modalController({
     modal: '.modal',
-    btnOpen: '.request_button',
+    btnOpen: '.button-addprinter',
     btnClose: '.modal_close',
 });
