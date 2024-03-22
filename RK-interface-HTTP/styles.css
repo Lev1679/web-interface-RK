@@ -103,7 +103,7 @@ input[type="number"] {
 
 /* ------------------------ СТРАНИЦА С ПРИНТЕРАМИ ----------------------------------- */
 
-.button-addprinter {
+.button-addIPprinter {
     background-image: url('images/printer_list/button_request.png');
     background-color: rgba(0,0,0,0);
     background-size: cover;
@@ -118,9 +118,48 @@ input[type="number"] {
     transition: background-color 0.3s ease, opacity 0.3s ease; /* добавляем transition */
 }
 
-.button-addprinter:hover {
+.button-addIPprinter:hover {
     background-color: rgba(0,0,0,0); 
     opacity: 0.8; 
+}
+
+.add_printer_button {
+  background-color: #4CAF50; /* Зеленый цвет */
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  padding: 10px 20px;
+  border-radius: 10px; 
+  cursor: pointer;
+  transition: opacity 0.3s ease; 
+}
+
+.add_printer_button:hover {
+  opacity: 0.8; 
+}
+
+#printerIPtextbox {
+  width: 100%;
+  padding: 10px; 
+  font-size: 20px; 
+  border: 1px solid #ccc; /* Граница текстового поля */
+  border-radius: 5px; /* Закругление углов */
+  box-sizing: border-box; /* Учитываем границу и внутренний отступ при определении ширины */
+  transition: border-color 0.3s ease; /* Плавное изменение цвета границы при фокусе */
+}
+
+/* Стили для текстового поля при фокусе */
+#printerIPtextbox:focus {
+  outline: none; /* Убираем стандартное выделение при фокусе */
+  border-color: #007bff; /* Цвет границы при фокусе */
+}
+
+.text-overlay {
+  text-align: left; /* Выравнивание по левому краю */
+  font-size: 5px; /* Меньший шрифт */
 }
 
 body {
@@ -152,6 +191,7 @@ body {
     padding: 30px;
     overflow-y: auto;
     display: none; 
+    z-index: 9999;
 }
 
 .modal_main {
@@ -161,13 +201,13 @@ body {
     margin: auto;
     color: #000;
     border-radius: 16px;
-    padding: 30px 60px 60px;
+    padding: 30px 50px 50px;
     cursor: default;
   }
   
   .modal_title {
-    font-size: 60px;
-    margin-bottom: 30px;
+    font-size: 50px;
+    margin-bottom: 20px;
   }
   
   .modal_container {
