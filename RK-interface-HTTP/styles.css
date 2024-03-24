@@ -1,29 +1,36 @@
-.logo-container {
-    background-color: rgba(0, 0, 0, 0.5); /* Цвет фона для контейнера с логотипом */
-    padding: 10px; /* Поля вокруг логотипа */
-    text-align: center; /* Выравнивание содержимого по центру */
-}
-
-.logo-container img {
-    width: 120px; /* Ширина логотипа */
-    height: auto;
-}
-
-/* Остальные стили оставляем без изменений */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
+    padding-top: 104px;
+}
+
+.logo-container {
+    background-color: rgb(33, 31, 31);
+    padding: 0;
+    text-align: left;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.logo-container img {
+    width: 100px;
+    height: 100px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 50px;
 }
 
 header {
     background-color: rgb(46, 45, 45);
     color: rgb(248, 248, 248);
     padding: 20px 0;
-    position: fixed;
-    top: 0;
+    position: absolute;
+    top: 120;
     left: 0;
     height: 100%;
-    width: 200px; /* Ширина заголовка */
+    width: 300px; /* Ширина заголовка */
     box-sizing: border-box; /* Учтем padding в ширине */
     display: flex; /* Делаем flex-контейнером */
     flex-direction: column; /* Располагаем элементы вертикально */
@@ -43,14 +50,14 @@ nav ul {
 }
 
 nav ul li {
-    display: block; 
-    margin-bottom: 10px; 
+  margin-bottom: 20px;
 }
 
 nav ul li a {
-    color: #fff;
+    color: #ffffff;
     text-decoration: none;
-    padding-left: 10px;
+    font-size: 20px;
+    padding-left: 20px;
 }
 
 nav ul li a:hover {
@@ -126,7 +133,7 @@ input[type="number"] {
     position:absolute;
     cursor: pointer;
     float: left;
-    left: 30px;
+    left: 330px;
     top: 300px;
     transition: background-color 0.3s ease, opacity 0.3s ease; /* добавляем transition */
 }
