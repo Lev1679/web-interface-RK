@@ -1,77 +1,54 @@
+/* --------------------------------ДИЗАЙН ЗАГОЛОВКА САЙТА---------------------------- */
+
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    padding-top: 104px;
-}
-
-.logo-container {
-    background-color: rgb(33, 31, 31);
-    padding: 0;
-    text-align: left;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-}
-
-.logo-container img {
-    width: 100px;
-    height: 100px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 50px;
+  font-family: Arial, sans-serif;
 }
 
 header {
-    background-color: rgb(46, 45, 45);
-    color: rgb(248, 248, 248);
-    padding: 20px 0;
-    position: absolute;
-    top: 120;
-    left: 0;
-    height: 100%;
-    width: 300px; /* Ширина заголовка */
-    box-sizing: border-box; /* Учтем padding в ширине */
-    display: flex; /* Делаем flex-контейнером */
-    flex-direction: column; /* Располагаем элементы вертикально */
-    justify-content: flex-start; /* Выравниваем элементы по верхнему краю */
+  background-color: rgb(46, 45, 45);
+  color: rgb(248, 248, 248);
+  height: 100px;
+  padding: 10px 20px; /* Отступы от краев */
+  border-radius: 20px; /* Закругленные края */
+  display: flex;
+  justify-content: space-between; /* Выравнивание по середине */
+  align-items: center; /* Выравнивание по вертикали */
 }
 
-header h1 {
-    color: rgb(248, 248, 248);
-    font-size: 28px;
-    align-self: center; /* Выравниваем заголовок по центру */
+.container {
+  display: flex;
+  align-items: center;
 }
 
-nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0; 
+.logo {
+  margin-right: 20px; /* Отступ между логотипом и навигацией */
+}
+
+nav {
+  margin-left: 120px;
 }
 
 nav ul li {
-  margin-bottom: 20px;
+  display: inline;
+  margin-left: 20px;
 }
 
+
 nav ul li a {
-    color: #ffffff;
-    text-decoration: none;
-    font-size: 20px;
-    padding-left: 20px;
+  color: #fff;
+  text-decoration: none;
 }
 
 nav ul li a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 header img {
-    width: 50px; /* или другой желаемый размер */
-    height: auto;
-    align-self: center; /* Выравниваем логотип по центру */
+  width: 300px; /* или другой желаемый размер */
+  height: auto;
+  padding-left: 30px;
 }
-
-
-/* styles.css */
+/* ----------------------КАЛЬКУЛЯТОР------------------------ */
 
 form {
     width: 300px;
@@ -133,7 +110,7 @@ input[type="number"] {
     position:absolute;
     cursor: pointer;
     float: left;
-    left: 330px;
+    left: 30px;
     top: 300px;
     transition: background-color 0.3s ease, opacity 0.3s ease; /* добавляем transition */
 }
@@ -181,11 +158,6 @@ input[type="number"] {
   text-align: left; /* Выравнивание по левому краю */
   font-size: 5px; /* Меньший шрифт */
 }
-
-body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-  }
   
   table {
     width: 100%;
@@ -294,3 +266,58 @@ body {
     color: white;
     text-align: center;
   }
+  
+  .nastroiki.container
+
+/* -----------------------СКЛАД----------------------------- (?) */
+
+
+
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Стили для таблицы */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table th, table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+table th {
+  background-color: #f2f2f2;
+}
+
+table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+table tr:hover {
+  background-color: #ddd;
+}
+

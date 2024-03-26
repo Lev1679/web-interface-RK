@@ -9,106 +9,52 @@
 
 </head>
 <body>
-    <header2 class="logo-container">
-        <a href="index.html">
-            <img src="images\unnamed.png" alt="Логотип">
-        </a>
-    </header2>
     <header>
-        <nav>
-            <ul>
-                <li><a href="printer.html">Принтеры</a></li>
-                <li><a href="resurs.html">Ресурсы</a></li>
-                <li><a href="nastroiki.html">Склад</a></li>
-                <li><a href="testing.html">вкладка для тестов</a></li>
-            </ul>
-        </nav>
+        <div class="container">
+            <a href="index.html">
+                <img src="images\logo-1.png" alt="Логотип">
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="printer.html">Принтеры</a></li>
+                    <li><a href="resurs.html">Ресурсы</a></li>
+                    <li><a href="nastroiki.html">Склад</a></li>
+                    <li><a href="testing.html">вкладка для тестов</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
-
-  
-    <h1>Склад пластика</h1>
-
-    <table id="plasticTable">
-        <tr>
-            <th>Вид пластика</th>
-            <th>Количество (кг)</th>
-        </tr>
-        <tr>
-            <td>Пластик A</td>
-            <td id="plasticA">100</td>
-        </tr>
-        <tr>
-            <td>Пластик B</td>
-            <td id="plasticB">150</td>
-        </tr>
-        <!-- Добавьте дополнительные строки по необходимости -->
-    </table>
-
-    <br>
-
-    <label for="plasticType">Выберите вид пластика:</label>
-    <select id="plasticType">
-        <option value="plasticA">Пластик A</option>
-        <option value="plasticB">Пластик B</option>
-        <!-- Добавьте дополнительные варианты по необходимости -->
-        <!-- какиш фм -->
-    </select>
-
-    <label for="quantity">Введите количество (кг):</label>
-    <input type="number" id="quantity" min="0" value="0">
-
-    <button onclick="updateQuantity()">Обновить количество</button>
-
-    <div>
-        <h2>Добавить новый вид пластика</h2>
-        <label for="newPlasticName">Название пластика:</label>
-        <input type="text" id="newPlasticName">
-        <button onclick="addNewPlastic()">Добавить</button>
-    </div>
-
-    <script src="javascript/java.js"></script>
-
-    <script>
-        fetch('/plastic-prices')
-            .then(response => response.json())
-            .then(data => {
-                const tableBody = document.querySelector('#plasticPricesTable tbody');
-                data.forEach(row => {
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td>${row.id}</td>
-                        <td>${row.plastic_type}</td>
-                        <td>${row.price_per_kg}</td>
-                        <td>${row.quantity}</td>
-                    `;
-                    tableBody.appendChild(tr);
-                });
-            })
-            .catch(error => console.error('Ошибка:', error));
-    </script>
-    <script>
-        fetch('/plastic-prices')
-            .then(response => response.json())
-            .then(data => {
-                const tableBody = document.querySelector('#plasticPricesTable tbody');
-                data.forEach(row => {
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td>${row.id}</td>
-                        <td>${row.plastic_type}</td>
-                        <td>${row.price_per_kg}</td>
-                        <td>${row.quantity}</td>
-                    `;
-                    tableBody.appendChild(tr);
-                });
-            })
-            .catch(error => console.error('Ошибка:', error));
-    </script>
-</body>
-</html>
-
-
-
     
-</body>
+      <div class="nastroiki container"></div>
+    <div class="container">
+        <h2>Склад пластика</h2>
+        <div class="input-group">
+            <label for="plasticType">Название:</label>
+            <input type="text" id="plasticType">
+        </div>
+        <div class="input-group">
+            <label for="quantity">Количество:</label>
+            <input type="number" id="quantity" min="1">
+        </div>
+        <div class="input-group">
+            <label for="price">Цена за единицу:</label>
+            <input type="number" id="price" min="0.01" step="0.01">
+        </div>
+        <button id="addToInventoryBtn">Добавить на склад</button>
+        <div id="inventoryOutput"></div>
+    </div>
+    <table id="inventoryTable">
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Количество</th>
+                <th>Цена за единицу</th>
+                <th>Действия</th> <!-- Добавляем заголовок для столбца с кнопкой "Удалить" -->
+            </tr>
+        </thead>
+        <tbody id="inventoryTableBody">
+            <!-- Сюда будут добавляться строки с данными -->
+        </tbody>
+    </table>
+    <script src="javascript/Stock/bd.js"></script>
 </html>
