@@ -5,7 +5,7 @@ body {
 }
 
 header {
-  background-color: rgb(46, 45, 45);
+  background-color: rgb(45, 45, 46);
   color: rgb(248, 248, 248);
   height: 100px;
   padding: 10px 20px; /* Отступы от краев */
@@ -60,7 +60,8 @@ form {
 
 /* Стили для заголовка калькулятора */
 h1 {
-    text-align: center;
+    text-align: left;
+    margin-left: 120px;
     color: #333;
 }
 
