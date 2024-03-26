@@ -36,12 +36,6 @@
 
     <h1> Принтеры:</h1>
     <section class="request">
-        <h2 id="response" class="hidden"></h2> 
-        <h3 id="response2" class="hidden"></h3> 
-        <h3 id="response3" class="hidden"></h3> 
-        <h3 id="response4" class="hidden"></h3> 
-        <h3 id="response5" class="hidden"></h3> 
-        <h3 id="response6" class="hidden"></h3> 
         <button id="addIPPrinterBtn" class="button-addIPprinter" onclick="showIPwindow()">
         </button>
     </section>
@@ -55,33 +49,15 @@
                 <input type="IPtextbox" id="printerIPtextbox">
             </div>
 
-            <button class="add_printer_button" onclick="addPrinter()">Добавить</button>
+            <button class="add_printer_button" onclick="addIP_localstorage(); addPrinter()">Добавить</button>
             <button class="modal_close">&#10006;</button>
         </div>
     </div>
 
     <script>
-        function showText() {
-            var ResponceTemp = document.getElementById("response");
-            ResponceTemp.style.display = "block"; 
-            var ResponceBed = document.getElementById("response2");
-            ResponceBed.style.display = "block"; 
-            var ResponceBed = document.getElementById("response3");
-            ResponceBed.style.display = "block"; 
-            var ResponceBed = document.getElementById("response4");
-            ResponceBed.style.display = "block"; 
-            var ResponceBed = document.getElementById("response5");
-            ResponceBed.style.display = "block"; 
-            var ResponceBed = document.getElementById("response6");
-            ResponceBed.style.display = "block"; 
-        }
-
         function showIPwindow() {
-            const modalElem = document.querySelector('.modal'); 
-            
-
+            const modalElem = document.querySelector('.modal');     
             modalElem.style.display = 'block'; 
-
         }
     </script>
     <script src="JavaScript/modalwindows.js"></script>

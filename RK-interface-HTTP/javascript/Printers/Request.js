@@ -1,8 +1,9 @@
 function RequestFunc() {
+    var printerIP = document.querySelector('.text-overlay').textContent;
     var urls = [
-        'http://192.168.5.11:7125/printer/objects/query?extruder',
-        'http://192.168.5.11:7125/printer/objects/query?heater_bed',
-        'http://192.168.5.11:7125/printer/objects/query?print_stats'
+        'http://' + printerIP + ':7125/printer/objects/query?extruder',
+        'http://' + printerIP + ':7125/printer/objects/query?heater_bed',
+        'http://' + printerIP + ':7125/printer/objects/query?print_stats'
     ];
 
     urls.forEach(function (url) {
@@ -15,7 +16,7 @@ function RequestFunc() {
                     var response = JSON.parse(xhr.responseText);
                     var data;
 
-                    // Проверяем, для какого устройства получен ответ
+                    // Check for which device the response is received
                     if (url.includes('extruder')) {
                         var temperature = response.result.status.extruder.temperature;
                         document.getElementById('response').textContent = 'Э: ' + temperature + '°C';
@@ -34,7 +35,7 @@ function RequestFunc() {
                         document.getElementById('response6').textContent = 'Статус: ' + state;
                     }
                 } else {
-                    // Обрабатываем ошибку
+                    // Handle errors
                     if (url.includes('extruder')) {
                         document.getElementById('response').textContent = 'Ошибка: Невозможно получить данные о принтере';
                     } else if (url.includes('heater_bed')) {
@@ -50,7 +51,7 @@ function RequestFunc() {
         };
 
         xhr.onerror = function () {
-            // Обрабатываем ошибку при выполнении запроса
+            // Handle request errors
             if (url.includes('extruder')) {
                 document.getElementById('response').textContent = 'Ошибка: Невозможно выполнить запрос к принтеру';
             } else if (url.includes('heater_bed')) {
@@ -66,6 +67,7 @@ function RequestFunc() {
         xhr.send();
     });
 }
+
 
 setInterval(RequestFunc, 3000);
 

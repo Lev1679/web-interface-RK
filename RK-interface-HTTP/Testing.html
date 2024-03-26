@@ -1,110 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Добавление принтера</title>
-<style>
-  /* CSS стили для контейнера с изображением и текстом */
-  .printer-container {
-    position: relative;
-    width: 394px; /* Задайте размеры вашего изображения */
-    height: 482px;
-    float: left; /* Выравниваем контейнеры по горизонтали */
-    margin-right: 20px; /* Добавляем отступ между контейнерами */
-    margin-bottom: 20px; /* Добавляем отступ между строками с контейнерами */
-  }
-
-  .printer-image {
-    width: 100%;
-    height: 100%;
-  }
-
-  .text-overlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 24px;
-    color: white;
-    text-align: center;
-  }
-
-  /* CSS стили для кнопки добавления принтера */
-  #addPrinterBtn {
-    width: 394px; /* Ширина кнопки равна ширине изображения принтера */
-    height: 482px; /* Высота кнопки равна высоте изображения принтера */
-    background-image: url('images/printer_list/printer_bg.png');
-    background-size: cover;
-    border: none;
-    cursor: pointer;
-    float: left;
-    margin-right: 20px;
-    margin-bottom: 20px;
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Printers</title>
+    <style>
+        .printer-container {
+            margin-bottom: 10px;
+        }
+        .printer {
+            background-color: #807d7d;
+            border-radius: 10px;
+            padding: 10px;
+        }
+    </style>
 </head>
 <body>
+    <h1>Printers:</h1>
+    <div id="outputContainer"></div>
+    <script>
+        function displayPrinters() {
+            const printers = JSON.parse(localStorage.getItem('printers')) || [];
+            const outputContainer = document.getElementById('outputContainer');
+            
+            // Clear previous content
+            outputContainer.innerHTML = '';
+            
+            // Loop through printers and display each one
+            printers.forEach((printer, index) => {
+                const printerContainer = document.createElement('div');
+                printerContainer.className = 'printer-container';
+                const printerDiv = document.createElement('div');
+                printerDiv.className = 'printer';
+                printerDiv.textContent = `${index + 1}. ${printer}`;
+                printerContainer.appendChild(printerDiv);
+                outputContainer.appendChild(printerContainer);
+            });
+        }
 
-<div id="printerPlaceholder" style="display: none;"></div>
-<button id="addPrinterBtn" onclick="addPrinter()">Добавить принтер</button>
-
-<script>
-  // Счетчик для отслеживания количества нажатий
-  var clickCount = 0;
-
-  // Функция для добавления контейнера с изображением и текстом на страницу
-  function addPrinter() {
-    // Создаем элементы контейнера
-    var printerContainer = document.createElement("div");
-    printerContainer.classList.add("printer-container");
-
-    var printerImage = document.createElement("img");
-    printerImage.classList.add("printer-image");
-    printerImage.src = "images/printer_list/printer_bg.png";
-    printerImage.alt = "Printer Background";
-
-    var textOverlay = document.createElement("div");
-    textOverlay.classList.add("text-overlay");
-    textOverlay.textContent = "Текст на изображении";
-
-    // Добавляем изображение и текст в контейнер
-    printerContainer.appendChild(printerImage);
-    printerContainer.appendChild(textOverlay);
-
-    // Определяем, в какой ряд добавить контейнер
-    var rowNumber = Math.floor(clickCount / 4) + 1; // Каждые 4 нажатия добавляем в новый ряд
-    var rowElement = document.querySelector('.row-' + rowNumber);
-    if (!rowElement) {
-      // Создаем новый ряд, если он не существует
-      rowElement = document.createElement('div');
-      rowElement.classList.add('row-' + rowNumber);
-      rowElement.style.clear = 'both'; // Чтобы контейнеры не перекрывали друг друга
-      document.body.appendChild(rowElement);
-    }
-
-    // Добавляем контейнер на страницу в нужный ряд
-    rowElement.appendChild(printerContainer);
-
-    // Увеличиваем счетчик
-    clickCount++;
-
-    // Перемещаем кнопку добавления принтера
-    if (clickCount % 4 === 0) {
-      // Если количество нажатий кратно 4, перемещаем кнопку на новую строку
-      var newRowTop = rowElement.offsetTop + 502;
-      document.getElementById('addPrinterBtn').style.position = 'absolute';
-      document.getElementById('addPrinterBtn').style.left = '20px';
-      document.getElementById('addPrinterBtn').style.top = newRowTop + 'px';
-    } else {
-      // Иначе перемещаем кнопку вправо
-      var buttonPosition = document.getElementById('addPrinterBtn').getBoundingClientRect();
-      document.getElementById('addPrinterBtn').style.position = 'absolute';
-      document.getElementById('addPrinterBtn').style.left = (buttonPosition.right + 20) + 'px';
-      document.getElementById('addPrinterBtn').style.top = buttonPosition.top + 'px';
-    }
-  }
-</script>
-
+        // Вызываем функцию для отображения при загрузке страницы
+        displayPrinters();
+    </script>
 </body>
 </html>
