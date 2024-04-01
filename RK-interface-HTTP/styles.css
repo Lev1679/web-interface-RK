@@ -272,18 +272,43 @@ input[type="number"] {
 
 /* -----------------------СКЛАД----------------------------- (?) */
 
-
-
-input[type="text"],
-input[type="number"] {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+/* Общие стили для контейнеров */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
   box-sizing: border-box;
 }
 
+/* Стили для заголовков */
+h2 {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+/* Стили для групп полей ввода */
+.input-group {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.input-group label {
+  flex: 0 0 50px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.input-group input[type="text"],
+.input-group input[type="number"] {
+  flex: 1;
+  padding: 10px;
+  border: 10px solid #ccc;
+  border-radius: 50px;
+  box-sizing: border-box;
+}
+
+/* Стили для кнопок */
 button {
   padding: 10px 20px;
   background-color: #4CAF50;
@@ -321,4 +346,5 @@ table tr:nth-child(even) {
 table tr:hover {
   background-color: #ddd;
 }
+
 

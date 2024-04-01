@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Информация о модели</title>
+    <link rel="stylesheet" type="text/css" href="styles2.css">
+</head>
+<body>
+
+<div class="container">
+    <h2>Информация о модели</h2>
+    <form id="modelForm">
+        <div>
+            <label for="length">Длина модели (см):</label>
+            <input type="number" id="length" name="length">
+        </div>
+        <div>
+            <label for="width">Ширина модели (см):</label>
+            <input type="number" id="width" name="width">
+        </div>
+        <div>
+            <label for="height">Высота модели (см):</label>
+            <input type="number" id="height" name="height">
+        </div>
+        <div>
+            <label for="wallThickness">Толщина стенок (см):</label>
+            <input type="number" id="wallThickness" name="wallThickness" value="1">
+        </div>
+        <div>
+            <label for="plasticType">Выберите вид пластика:</label>
+            <select id="plasticType" name="plasticType">
+                <option value="ABS">ABS</option>
+                <option value="PLA">PLA</option>
+                <option value="POL">Поликарбонат</option>
+                <option value="FOT">Фотополимер</option>
+                <option value="REZ">Резиноподобный</option>
+                <!-- Добавьте здесь другие варианты, если необходимо -->
+            </select>
+        </div>
+        <div>
+            <input type="file" id="modelInput" accept=".obj,.fbx,.stl">
+            <button type="button" onclick="uploadModel()">Загрузить модель</button>
+        </div>
+        <div id="uploadStatus"></div> <!-- Этот элемент будет использоваться для вывода сообщения о статусе загрузки модели -->
+        <button type="button" id="calculateButton">Рассчитать</button>
+    </form>
+    <div id="result"></div>
+</div>
+
+
+<script type="module" src="script2.js"></script>
+
+
+</body>
+</html>
