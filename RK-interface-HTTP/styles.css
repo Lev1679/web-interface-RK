@@ -260,7 +260,7 @@ input[type="number"] {
 
   .text-overlay {
     position: absolute;
-    top: 50%;
+    top: 25%;
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 24px;
@@ -268,10 +268,23 @@ input[type="number"] {
     text-align: center;
   }
   
-  .nastroiki.container
+  
+.delete-button {
+  position: absolute;
+  bottom: 400px;
+  left: 250px;
+  background-color: green;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 20px;
+}
 
 /* -----------------------СКЛАД----------------------------- (?) */
 
+.nastroiki.container
 /* Общие стили для контейнеров */
 .container {
   max-width: 800px;

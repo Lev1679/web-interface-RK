@@ -1,7 +1,6 @@
 var clickCount = 0;
 
 function addPrinter() {
-    // Создаем элементы контейнера
     var printerContainer = document.createElement("div");
     printerContainer.classList.add("printer-container");
 
@@ -19,7 +18,8 @@ function addPrinter() {
 
     // Получаем текст из localStorage по индексу
     var printers = JSON.parse(localStorage.getItem('printers')) || [];
-    var printerText = printers[index];
+    var printerIP = printers[index]; // IP адрес принтера
+    var printerText = printerIP;
 
     // Устанавливаем текст на текстовом оверлее
     textOverlay.textContent = printerText;
@@ -27,6 +27,14 @@ function addPrinter() {
     // Добавляем изображение и текст в контейнер
     printerContainer.appendChild(printerImage);
     printerContainer.appendChild(textOverlay);
+
+    // Создаем текстовое поле для вывода информации о принтере
+    var printerInfo = document.createElement("div");
+    printerInfo.classList.add("printer-info");
+    printerContainer.appendChild(printerInfo);
+
+    // Выполняем запрос к принтеру и выводим информацию в текстовое поле
+    makeRequestAndUpdatePrinterInfo(printerIP, printerInfo);
 
     // Создаем кнопку удаления
     var deleteButton = document.createElement("button");
@@ -70,50 +78,51 @@ function addPrinter() {
     updateAddButtonPosition();
 }
 
-function requestPrinterData(printerIP, printerContainer, printerImage) {
+function makeRequestAndUpdatePrinterInfo(printerIP, printerInfoElement) {
     var urls = [
         'http://' + printerIP + ':7125/printer/objects/query?extruder',
         'http://' + printerIP + ':7125/printer/objects/query?heater_bed',
         'http://' + printerIP + ':7125/printer/objects/query?print_stats'
     ];
 
-    urls.forEach(function (url) {
+    urls.forEach(function(url) {
         var xhr = new XMLHttpRequest();
         xhr.open('GET', url, true);
 
-        xhr.onreadystatechange = function () {
+        xhr.onreadystatechange = function() {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
                     var response = JSON.parse(xhr.responseText);
+                    var data;
 
-                    // Check for which device the response is received
+                    // Handle response data and update printer info
                     if (url.includes('extruder')) {
                         var temperature = response.result.status.extruder.temperature;
-                        printerImage.setAttribute('title', 'Экструдер: ' + temperature + '°C');
+                        printerInfoElement.textContent += 'Э: ' + temperature + '°C\n'; // добавляем символ новой строки
                     } else if (url.includes('heater_bed')) {
                         var temperature = response.result.status.heater_bed.temperature;
-                        printerImage.setAttribute('title', 'Подогрев: ' + temperature + '°C');
+                        printerInfoElement.textContent += 'П: ' + temperature + '°C\n'; // добавляем символ новой строки
                     } else if (url.includes('print_stats')) {
                         var filename = response.result.status.print_stats.filename;
                         var totalDuration = response.result.status.print_stats.total_duration;
                         var printDuration = response.result.status.print_stats.print_duration;
                         var state = response.result.status.print_stats.state;
 
-                        printerImage.setAttribute('title', 'Файл: ' + filename + '\n' +
-                            'Общ. Длительность: ' + totalDuration + ' сек\n' +
-                            'Длительность печати: ' + printDuration + ' сек\n' +
-                            'Статус: ' + state);
+                        printerInfoElement.textContent += 'Файл: ' + filename + '\n';
+                        printerInfoElement.textContent += 'Общ. Длительность: ' + totalDuration + ' сек\n';
+                        printerInfoElement.textContent += 'Длительность печати: ' + printDuration + ' сек\n';
+                        printerInfoElement.textContent += 'Статус: ' + state + '\n';
                     }
                 } else {
                     // Handle errors
-                    // You can handle errors here as per your requirement
+                    // You can handle errors here if needed
                 }
             }
         };
 
-        xhr.onerror = function () {
+        xhr.onerror = function() {
             // Handle request errors
-            // You can handle request errors here as per your requirement
+            // You can handle errors here if needed
         };
 
         xhr.send();
