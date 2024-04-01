@@ -28,13 +28,13 @@ function addPrinter() {
     printerContainer.appendChild(printerImage);
     printerContainer.appendChild(textOverlay);
 
-    // Создаем текстовое поле для вывода информации о принтере
-    var printerInfo = document.createElement("div");
-    printerInfo.classList.add("printer-info");
-    printerContainer.appendChild(printerInfo);
+    // Создаем контейнер для вывода информации о принтере
+    var printerInfoContainer = document.createElement("div");
+    printerInfoContainer.classList.add("printer-info");
+    printerContainer.appendChild(printerInfoContainer);
 
-    // Выполняем запрос к принтеру и выводим информацию в текстовое поле
-    makeRequestAndUpdatePrinterInfo(printerIP, printerInfo);
+    // Выполняем запрос к принтеру и выводим информацию в контейнер
+    makeRequestAndUpdatePrinterInfo(printerIP, printerInfoContainer);
 
     // Создаем кнопку удаления
     var deleteButton = document.createElement("button");
@@ -42,20 +42,31 @@ function addPrinter() {
     deleteButton.classList.add("delete-button");
 
     // Добавляем обработчик события для удаления принтера при нажатии на кнопку
-    deleteButton.addEventListener("click", function() {
+    deleteButton.addEventListener("click", function () {
         // Удаляем принтер из DOM
         printerContainer.remove();
-        
+
         // Удаляем принтер из localStorage
         printers.splice(index, 1);
         localStorage.setItem('printers', JSON.stringify(printers));
-        
+
         // Перемещаем кнопку добавления принтера
         updateAddButtonPosition();
     });
 
     // Добавляем кнопку удаления в контейнер
     printerContainer.appendChild(deleteButton);
+
+    // Создаем кнопку Fluid
+    var fluidButton = document.createElement("a");
+    fluidButton.textContent = "F";
+    fluidButton.classList.add("Fluid-button");
+
+    // Устанавливаем ссылку на соответствующий принтер
+    fluidButton.href = "http://" + printerIP;
+
+    // Добавляем кнопку Fluid в контейнер
+    printerContainer.appendChild(fluidButton);
 
     // Определяем, в какой ряд добавить контейнер
     var rowNumber = Math.floor(clickCount / 4) + 1; // Каждые 4 нажатия добавляем в новую строку
@@ -78,56 +89,89 @@ function addPrinter() {
     updateAddButtonPosition();
 }
 
-function makeRequestAndUpdatePrinterInfo(printerIP, printerInfoElement) {
+function makeRequestAndUpdatePrinterInfo(printerIP, printerInfoContainer) {
     var urls = [
         'http://' + printerIP + ':7125/printer/objects/query?extruder',
         'http://' + printerIP + ':7125/printer/objects/query?heater_bed',
         'http://' + printerIP + ':7125/printer/objects/query?print_stats'
     ];
 
-    urls.forEach(function(url) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', url, true);
+    var temperatureElement = printerInfoContainer.querySelector('.temperature-info');
+    var bedTemperatureElement = printerInfoContainer.querySelector('.bed-temperature-info');
+    var printerStatsElement = printerInfoContainer.querySelector('.printer-stats-info');
 
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                    var response = JSON.parse(xhr.responseText);
-                    var data;
+    // Создаем элементы "Э" и "П"
+    var temperatureElement = document.createElement("div");
+    var bedTemperatureElement = document.createElement("div");
 
-                    // Handle response data and update printer info
-                    if (url.includes('extruder')) {
-                        var temperature = response.result.status.extruder.temperature;
-                        printerInfoElement.textContent += 'Э: ' + temperature + '°C\n'; // добавляем символ новой строки
-                    } else if (url.includes('heater_bed')) {
-                        var temperature = response.result.status.heater_bed.temperature;
-                        printerInfoElement.textContent += 'П: ' + temperature + '°C\n'; // добавляем символ новой строки
-                    } else if (url.includes('print_stats')) {
-                        var filename = response.result.status.print_stats.filename;
-                        var totalDuration = response.result.status.print_stats.total_duration;
-                        var printDuration = response.result.status.print_stats.print_duration;
-                        var state = response.result.status.print_stats.state;
+    printerInfoContainer.appendChild(temperatureElement);
+    printerInfoContainer.appendChild(bedTemperatureElement);
 
-                        printerInfoElement.textContent += 'Файл: ' + filename + '\n';
-                        printerInfoElement.textContent += 'Общ. Длительность: ' + totalDuration + ' сек\n';
-                        printerInfoElement.textContent += 'Длительность печати: ' + printDuration + ' сек\n';
-                        printerInfoElement.textContent += 'Статус: ' + state + '\n';
+    // Создаем элемент для вывода информации о статистике принтера
+    var printerStatsElement = document.createElement("div");
+    printerStatsElement.classList.add("printer-stats");
+    printerInfoContainer.appendChild(printerStatsElement);
+
+    // Функция для обновления информации о принтере
+    function updateInfo() {
+        // Отправляем запросы по каждому URL
+        urls.forEach(function (url) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', url, true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        var response = JSON.parse(xhr.responseText);
+
+                        // Получаем информацию из каждого запроса
+                        if (url.includes('extruder')) {
+                            var temperature = response.result.status.extruder.temperature;
+                            temperatureElement.textContent = 'Э: ' + temperature + '°C';
+                        } else if (url.includes('heater_bed')) {
+                            var bedTemperature = response.result.status.heater_bed.temperature;
+                            bedTemperatureElement.textContent = 'П: ' + bedTemperature + '°C';
+                        } else if (url.includes('print_stats')) {
+                            var filename = response.result.status.print_stats.filename;
+                            var totalDuration = response.result.status.print_stats.total_duration;
+                            var printDuration = response.result.status.print_stats.print_duration;
+                            var state = response.result.status.print_stats.state;
+
+                            // Обновляем информацию о статистике принтера
+                            printerStatsElement.textContent = 'Файл: ' + filename + '    |    ' +
+                                'Общ. Длительность: ' + totalDuration + ' сек    |    ' +
+                                'Длительность печати: ' + printDuration + ' сек    |    ' +
+                                'Статус: ' + state;
+
+                            // Создаем элемент для статуса и добавляем ему класс
+                            var stateElement = document.createElement("div");
+                            stateElement.classList.add("state-info");
+                            stateElement.textContent = 'Статус: ' + state;
+                            printerStatsElement.appendChild(stateElement);
+                        }
+                    } else {
+                        // Handle errors
+                        console.error('Ошибка запроса из: ' + url + ': ' + xhr.statusText);
                     }
-                } else {
-                    // Handle errors
-                    // You can handle errors here if needed
                 }
-            }
-        };
+            };
 
-        xhr.onerror = function() {
-            // Handle request errors
-            // You can handle errors here if needed
-        };
+            xhr.onerror = function () {
+                // Handle request errors
+                console.error('Error occurred while sending request to ' + url);
+            };
 
-        xhr.send();
-    });
+            xhr.send();
+        });
+    }
+
+    // Вызываем функцию updateInfo для обновления информации и устанавливаем интервал обновления
+    updateInfo();
+    setInterval(updateInfo, 3000);
 }
+
+
+
 
 // Функция для обновления позиции кнопки добавления принтера
 function updateAddButtonPosition() {
@@ -188,17 +232,3 @@ function loadPrintersFromLocalStorage() {
 
 // Загрузка принтеров из localStorage при загрузке страницы
 document.addEventListener('DOMContentLoaded', loadPrintersFromLocalStorage);
-
-setInterval(function() {
-    var textOverlays = document.querySelectorAll('.text-overlay');
-    textOverlays.forEach(function(overlay) {
-        var response1 = document.getElementById('response').textContent;
-        var response2 = document.getElementById('response2').textContent;
-        var response3 = document.getElementById('response3').textContent;
-        var response4 = document.getElementById('response4').textContent;
-        var response5 = document.getElementById('response5').textContent;
-        var response6 = document.getElementById('response6').textContent;
-
-        overlay.innerHTML = response1 + '<br>' + response2 + '<br>' + response3 + '<br>' + response4 + '<br>' + response5 + '<br>' + response6;
-    });
-}, 3000);
