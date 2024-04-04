@@ -267,13 +267,6 @@ input[type="number"] {
     color: white;
     text-align: center;
   }
-
-  .state-info {
-    font-weight: bold; /* Жирный текст */
-    color: #FF0000; /* Красный цвет */
-    /* Другие стили, которые вы хотите добавить */
-}
-  
   
 .delete-button {
   position: absolute;
@@ -293,6 +286,14 @@ input[type="number"] {
   transition: background-color 0.3s ease, opacity 0.3s ease;
 }
 
+.temperature-info, .bed-temperature-info, .printer-stats {
+  position: relative;
+  color: white;
+  display: block;
+  margin-bottom: 0px;
+  bottom: 320px;
+  left: 70px;
+}
 
 .Fluid-button {
   position: absolute;

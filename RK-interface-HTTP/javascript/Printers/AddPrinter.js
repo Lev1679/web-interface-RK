@@ -96,25 +96,19 @@ function makeRequestAndUpdatePrinterInfo(printerIP, printerInfoContainer) {
         'http://' + printerIP + ':7125/printer/objects/query?print_stats'
     ];
 
-    var temperatureElement = printerInfoContainer.querySelector('.temperature-info');
-    var bedTemperatureElement = printerInfoContainer.querySelector('.bed-temperature-info');
-    var printerStatsElement = printerInfoContainer.querySelector('.printer-stats-info');
-
-    // Создаем элементы "Э" и "П"
     var temperatureElement = document.createElement("div");
-    var bedTemperatureElement = document.createElement("div");
-
+    temperatureElement.classList.add("temperature-info"); // Добавляем класс для "Э"
     printerInfoContainer.appendChild(temperatureElement);
+
+    var bedTemperatureElement = document.createElement("div");
+    bedTemperatureElement.classList.add("bed-temperature-info"); // Добавляем класс для "П"
     printerInfoContainer.appendChild(bedTemperatureElement);
 
-    // Создаем элемент для вывода информации о статистике принтера
     var printerStatsElement = document.createElement("div");
     printerStatsElement.classList.add("printer-stats");
     printerInfoContainer.appendChild(printerStatsElement);
 
-    // Функция для обновления информации о принтере
     function updateInfo() {
-        // Отправляем запросы по каждому URL
         urls.forEach(function (url) {
             var xhr = new XMLHttpRequest();
             xhr.open('GET', url, true);
@@ -123,8 +117,8 @@ function makeRequestAndUpdatePrinterInfo(printerIP, printerInfoContainer) {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
                         var response = JSON.parse(xhr.responseText);
+                        var text;
 
-                        // Получаем информацию из каждого запроса
                         if (url.includes('extruder')) {
                             var temperature = response.result.status.extruder.temperature;
                             temperatureElement.textContent = 'Э: ' + temperature + '°C';
@@ -137,27 +131,33 @@ function makeRequestAndUpdatePrinterInfo(printerIP, printerInfoContainer) {
                             var printDuration = response.result.status.print_stats.print_duration;
                             var state = response.result.status.print_stats.state;
 
-                            // Обновляем информацию о статистике принтера
-                            printerStatsElement.textContent = 'Файл: ' + filename + '    |    ' +
-                                'Общ. Длительность: ' + totalDuration + ' сек    |    ' +
-                                'Длительность печати: ' + printDuration + ' сек    |    ' +
-                                'Статус: ' + state;
+                            printerStatsElement.textContent = '';
 
-                            // Создаем элемент для статуса и добавляем ему класс
+                            var filenameElement = document.createElement("div");
+                            filenameElement.textContent = 'Файл: ' + filename;
+                            printerStatsElement.appendChild(filenameElement);
+
+                            var totalDurationElement = document.createElement("div");
+                            totalDurationElement.textContent = 'Общ. Длительность: ' + totalDuration + ' сек';
+                            printerStatsElement.appendChild(totalDurationElement);
+
+                            var printDurationElement = document.createElement("div");
+                            printDurationElement.classList.add("PrintDuration");
+                            printDurationElement.textContent = 'Длительность печати: ' + printDuration + ' сек';
+                            printerStatsElement.appendChild(printDurationElement);
+
                             var stateElement = document.createElement("div");
                             stateElement.classList.add("state-info");
                             stateElement.textContent = 'Статус: ' + state;
                             printerStatsElement.appendChild(stateElement);
                         }
                     } else {
-                        // Handle errors
                         console.error('Ошибка запроса из: ' + url + ': ' + xhr.statusText);
                     }
                 }
             };
 
             xhr.onerror = function () {
-                // Handle request errors
                 console.error('Error occurred while sending request to ' + url);
             };
 
@@ -165,7 +165,6 @@ function makeRequestAndUpdatePrinterInfo(printerIP, printerInfoContainer) {
         });
     }
 
-    // Вызываем функцию updateInfo для обновления информации и устанавливаем интервал обновления
     updateInfo();
     setInterval(updateInfo, 3000);
 }
