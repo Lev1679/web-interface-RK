@@ -136,7 +136,7 @@ input[type="number"] {
 }
 
 .add_printer_button:hover {
-  opacity: 0.8; 
+  opacity: 0.8 ease; 
 }
 
 #printerIPtextbox {
@@ -267,11 +267,20 @@ input[type="number"] {
     color: white;
     text-align: center;
   }
+
+  .text-overlay:hover {
+    color: white; /* Изменение цвета текста при наведении курсора */
+    border: 5px solid rgb(82, 131, 194); /* Добавление обводки */
+    border-radius: 10px;
+    background-color: rgb(82, 131, 194);
+    transition: color 0.3s, border 0.3s;   /* Плавный переход цвета текста и обводки */
+  }
   
 .delete-button {
   position: absolute;
-  bottom: 400px;
-  left: 250px;
+  bottom: 395px;
+  left: 295px;
+  scale: 1.3;
   background-color: rgb(82, 131, 194);
   color: white;
   border: none;
@@ -279,6 +288,7 @@ input[type="number"] {
   cursor: pointer;
   font-size: 16px;
   border-radius: 8px;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
 }
 
 .delete-button:hover {
@@ -290,28 +300,13 @@ input[type="number"] {
   position: relative;
   color: white;
   display: block;
-  margin-bottom: 0px;
+  margin-bottom: 20px; 
   bottom: 320px;
   left: 70px;
+  font-size: 18px;
 }
-
-.Fluid-button {
-  position: absolute;
-  bottom:400px;
-  left: 60px;
-  background-color: rgb(82, 131, 194);
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-  font-size: 16px;
-  border-radius: 8px;
-  text-decoration: none;
-}
-
-.Fluid-button:hover {
-  background-color: rgb(128, 173, 233);
-  transition: background-color 0.3s ease, opacity 0.3s ease;
+.printduration{ 
+  margin-bottom: 20px; /* Измените это значение по вашему усмотрению */
 }
 
 /* -----------------------СКЛАД----------------------------- (?) */

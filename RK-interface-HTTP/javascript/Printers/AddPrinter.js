@@ -38,7 +38,7 @@ function addPrinter() {
 
     // Создаем кнопку удаления
     var deleteButton = document.createElement("button");
-    deleteButton.textContent = "Удалить";
+    deleteButton.textContent = "X";
     deleteButton.classList.add("delete-button");
 
     // Добавляем обработчик события для удаления принтера при нажатии на кнопку
@@ -57,16 +57,10 @@ function addPrinter() {
     // Добавляем кнопку удаления в контейнер
     printerContainer.appendChild(deleteButton);
 
-    // Создаем кнопку Fluid
-    var fluidButton = document.createElement("a");
-    fluidButton.textContent = "F";
-    fluidButton.classList.add("Fluid-button");
-
-    // Устанавливаем ссылку на соответствующий принтер
-    fluidButton.href = "http://" + printerIP;
-
-    // Добавляем кнопку Fluid в контейнер
-    printerContainer.appendChild(fluidButton);
+    // Получаем IP принтера по клику и перенаправляем на его страницу
+    textOverlay.addEventListener('click', function() {
+        window.location.href = "http://" + printerIP;
+    });
 
     // Определяем, в какой ряд добавить контейнер
     var rowNumber = Math.floor(clickCount / 4) + 1; // Каждые 4 нажатия добавляем в новую строку
@@ -117,7 +111,6 @@ function makeRequestAndUpdatePrinterInfo(printerIP, printerInfoContainer) {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
                         var response = JSON.parse(xhr.responseText);
-                        var text;
 
                         if (url.includes('extruder')) {
                             var temperature = response.result.status.extruder.temperature;
@@ -127,8 +120,8 @@ function makeRequestAndUpdatePrinterInfo(printerIP, printerInfoContainer) {
                             bedTemperatureElement.textContent = 'П: ' + bedTemperature + '°C';
                         } else if (url.includes('print_stats')) {
                             var filename = response.result.status.print_stats.filename;
-                            var totalDuration = response.result.status.print_stats.total_duration;
-                            var printDuration = response.result.status.print_stats.print_duration;
+                            var totalDurationInSeconds = response.result.status.print_stats.total_duration;
+                            var printDurationInSeconds = response.result.status.print_stats.print_duration;
                             var state = response.result.status.print_stats.state;
 
                             printerStatsElement.textContent = '';
@@ -138,12 +131,12 @@ function makeRequestAndUpdatePrinterInfo(printerIP, printerInfoContainer) {
                             printerStatsElement.appendChild(filenameElement);
 
                             var totalDurationElement = document.createElement("div");
-                            totalDurationElement.textContent = 'Общ. Длительность: ' + totalDuration + ' сек';
+                            totalDurationElement.textContent = 'Время работы: ' + formatTime(totalDurationInSeconds);
                             printerStatsElement.appendChild(totalDurationElement);
 
                             var printDurationElement = document.createElement("div");
                             printDurationElement.classList.add("PrintDuration");
-                            printDurationElement.textContent = 'Длительность печати: ' + printDuration + ' сек';
+                            printDurationElement.textContent = 'Длит. печати: ' + formatTime(printDurationInSeconds);
                             printerStatsElement.appendChild(printDurationElement);
 
                             var stateElement = document.createElement("div");
@@ -165,12 +158,16 @@ function makeRequestAndUpdatePrinterInfo(printerIP, printerInfoContainer) {
         });
     }
 
+    // Функция для форматирования времени из секунд в минуты:секунды
+    function formatTime(seconds) {
+        var minutes = Math.floor(seconds / 60);
+        var remainingSeconds = Math.ceil(seconds % 60); // Округляем секунды вверх
+        return minutes + ' мин ' + remainingSeconds + ' сек';
+    }
+
     updateInfo();
     setInterval(updateInfo, 3000);
 }
-
-
-
 
 // Функция для обновления позиции кнопки добавления принтера
 function updateAddButtonPosition() {
