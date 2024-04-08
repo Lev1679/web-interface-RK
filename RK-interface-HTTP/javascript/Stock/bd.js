@@ -6,6 +6,7 @@ document.getElementById("addToInventoryBtn").addEventListener("click", function(
 
   // Создаем объект для хранения данных о пластике
   var newItem = {
+      id: Date.now(), // Генерируем уникальный ID на основе времени
       plasticType: plasticType,
       quantity: quantity,
       price: price
@@ -38,12 +39,14 @@ function updateInventoryDisplay() {
   var inventory = JSON.parse(localStorage.getItem('inventory')) || [];
 
   // Проходим по каждому товару в списке и добавляем его в таблицу
-  inventory.forEach(function(item, index) {
+  inventory.forEach(function(item) {
       var row = tableBody.insertRow();
-      var cell1 = row.insertCell(0);
-      var cell2 = row.insertCell(1);
-      var cell3 = row.insertCell(2);
-      var cell4 = row.insertCell(3);
+      var cell0 = row.insertCell(0);
+      var cell1 = row.insertCell(1);
+      var cell2 = row.insertCell(2);
+      var cell3 = row.insertCell(3);
+      var cell4 = row.insertCell(4); // Добавляем ячейку для кнопки "Удалить"
+      cell0.textContent = item.id; // Отображаем ID товара
       cell1.textContent = item.plasticType;
       cell2.textContent = item.quantity;
       cell3.textContent = item.price;
@@ -51,10 +54,12 @@ function updateInventoryDisplay() {
       deleteButton.textContent = "Удалить";
       deleteButton.addEventListener("click", function() {
           // Удаляем товар из списка в LocalStorage
-          inventory.splice(index, 1);
+          inventory = inventory.filter(function (el) {
+              return el.id !== item.id; // Фильтруем товары по ID
+          });
           localStorage.setItem('inventory', JSON.stringify(inventory));
           // Удаляем строку из таблицы
-          tableBody.deleteRow(row.rowIndex);
+          tableBody.removeChild(row);
       });
       cell4.appendChild(deleteButton);
   });
